@@ -33,14 +33,16 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try{
-        const all_users = await DB.execQuery(`SELECT * FROM users`);
+               const all_users = await DB.execQuery(`SELECT * FROM users`);
         if (! all_users.find((x) => x.Username === req.body.user_name))
-            throw {status : 401, message: "Incorrect details, user not found !"};
+            res.status(401).send(" Incorrect details !");
+        //throw {  status : 401, message: "Incorrect details, user not found !"};
 
         const user = await DB.execQuery(`SELECT * FROM users WHERE Username =  '${req.body.user_name}'`);
         const password_user = bcrypt.hashSync( user[0].Password ,14);
         if (! password_user.localeCompare( req.body.password))
-            throw {status : 401, message: "Incorrect Password !"};
+            res.status(401).send(" Incorrect details !");
+        //throw {status : 401, message: "Incorrect Password !"};
 
         //succeeded:
         const bla = user[0].UserID;
