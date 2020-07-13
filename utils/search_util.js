@@ -37,7 +37,7 @@ async function searchForRecipes(search_params) {
       diet: search_params.diet,
       cuisine: search_params.cuisine,
       intolerances: search_params.intolerances,
-      instructionsRequired: search_params.instructionsRequired,
+      instructionsRequired: true,
     },
   });
 
