@@ -176,6 +176,22 @@ router.get('/recipeinfo/id/:id', async(req, res) => {
     
 });
 
+
+router.post('/seeRecipe',async(req,res) =>{
+    let id = [{
+        RecipeID:req.body.id
+    }];
+    let name = req.body.username;
+    try{
+        let uid = req.user1[0].UserID
+        users_util.insertSeenDate(id,name);
+        let fav = await users_util.isFavorite(id,uid);
+        res.status(200).send(fav);
+    }catch{
+        res.status(401).send("something went wrong");
+    }
+});
+
 router.post('/logout', (req,res) => {
     req.user = null;
 });

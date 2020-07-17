@@ -16,7 +16,7 @@ app.use(
   session({
     cookieName: "session",
     secret: "123bimbam",
-    duration: 20 * 1000,
+    duration: 20 * 10000000,
     cookie: {
       httpOnly: false,
     },

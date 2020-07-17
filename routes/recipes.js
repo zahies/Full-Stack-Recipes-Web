@@ -78,7 +78,8 @@ router.get("/fullrecipeinfo/id/:id", async (req, res) => {
     const { id } = req.params;
     //let id = req.query.id;
     let recipe = await recipes_utils.getFullInfoRecipe(id);
-    await users_util.insertToRecipes(recipe);
+    let ourID =await users_util.insertToRecipes(recipe);
+    recipe[0].DBID = ourID;
     if (!recipe) {
       throw { status: 401, message: "Incorrect details, recipe not found !" };
     } else {

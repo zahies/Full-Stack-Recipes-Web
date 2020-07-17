@@ -62,6 +62,7 @@ async function getFullInfoRecipe(id) {
       extendedIngredients: recipeinfo.data.extendedIngredients,
       instructions: recipeinfo.data.instructions,
       servings: recipeinfo.data.servings,
+      DBID: null,
     });
 
     //console.log(relevant_array);
@@ -77,6 +78,7 @@ async function getRecipeFromDB(id) {
   const recipeinfo = await DB.execQuery(
     `SELECT * FROM recipes WHERE RecipeID = '${id}'`
   );
+  const seen = await DB.execQuery(`SELECT SeenFlag FROM user_recipes WHERE RecipeID = '${id}'`)
   var relevant_array = [];
   relevant_array.push({
     id: recipeinfo[0].RecipeID,
@@ -87,6 +89,8 @@ async function getRecipeFromDB(id) {
     aggregateLikes: recipeinfo[0].numOfLikes,
     glutenFree: recipeinfo[0].GlutenFree,
     vegan: recipeinfo[0].Vegan,
+    seen: seen[0].SeenFlag
+    
   });
   return relevant_array;
 }

@@ -227,6 +227,8 @@ async function checkIfRecipeExist(id){
 async function insertToRecipes(recipe){
     try{
         await DB.execQuery(`INSERT INTO [dbo].[recipes] (Type, API_ID) VALUES ('API','${recipe[0].id}')`)
+        let ourID =await DB.execQuery(`SELECT Top 1 RecipeID FROM recipes where API_ID='${recipe[0].id}'`)
+        return ourID;
     }catch(error){
         console.log(error)
     }
@@ -259,7 +261,7 @@ const getOurIDFromDB2 =  function(id) {
 
 async function isFavorite(recID,user_id){
     let name = await DB.execQuery(`SELECT Username From users WHERE UserID = '${user_id}'`);
-    const ans = await DB.execQuery(`SELECT FavoriteFlag FROM user_recipes WHERE UserName = '${name[0].Username}' and RecipeID = '${recID}'`);
+    const ans = await DB.execQuery(`SELECT FavoriteFlag FROM user_recipes WHERE UserName = '${name[0].Username}' and RecipeID = '${recID[0].RecipeID}'`);
     if(ans.length===0){
         return false;
     }
