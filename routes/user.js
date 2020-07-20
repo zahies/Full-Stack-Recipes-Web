@@ -192,7 +192,47 @@ router.post("/seeRecipe", async (req, res) => {
 
 router.get("/seenRecipe/:id", async (req, res) => {
   const { id } = req.params;
+  var consist_letters = false;
   try {
+    var arr = [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z",
+    ];
+
+    for (var i = 0; i < arr.length; i++) {
+      if (id.includes(arr[i])) {
+        consist_letters = true;
+      }
+    }
+    if (consist_letters) {
+      let username = await users_util.getUserIDByname(req.user1[0].Username);
+      let isSeen = await users_util.isSeen(id, username[0].UserID);
+      res.status(200).send(isSeen);
+    }
     let ourRecID = await users_util.getOurIDFromDB(id);
     if (ourRecID.length > 0) {
       let username = await users_util.getUserIDByname(req.user1[0].Username);
@@ -211,7 +251,46 @@ router.get("/seenRecipe/:id", async (req, res) => {
 
 router.get("/favRecipe/:id", async (req, res) => {
   const { id } = req.params;
+  var consist_letters = false;
   try {
+    var arr = [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z",
+    ];
+    for (var i = 0; i < arr.length; i++) {
+      if (id.includes(arr[i])) {
+        consist_letters = true;
+      }
+    }
+    if (consist_letters) {
+      let username = await users_util.getUserIDByname(req.user1[0].Username);
+      let isSeen = await users_util.isSeen(id, username[0].UserID);
+      res.status(200).send(isSeen);
+    }
     let ourRecID = await users_util.getOurIDFromDB(id);
     if (ourRecID.length > 0) {
       let username = await users_util.getUserIDByname(req.user1[0].Username);
