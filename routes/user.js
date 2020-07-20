@@ -194,12 +194,16 @@ router.get("/seenRecipe/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let ourRecID = await users_util.getOurIDFromDB(id);
-    let username = await users_util.getUserIDByname(req.user1[0].Username);
-    let isSeen = await users_util.isSeen(
-      ourRecID[0].RecipeID,
-      username[0].UserID
-    );
-    res.status(200).send(isSeen);
+    if (ourRecID.length > 0) {
+      let username = await users_util.getUserIDByname(req.user1[0].Username);
+      let isSeen = await users_util.isSeen(
+        ourRecID[0].RecipeID,
+        username[0].UserID
+      );
+      res.status(200).send(isSeen);
+    } else {
+      res.status(200).send(false);
+    }
   } catch {
     res.status(401).send("something went wrong");
   }
@@ -209,9 +213,13 @@ router.get("/favRecipe/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let ourRecID = await users_util.getOurIDFromDB(id);
-    let username = await users_util.getUserIDByname(req.user1[0].Username);
-    let isSeen = await users_util.isFavorite(ourRecID, username[0].UserID);
-    res.status(200).send(isSeen);
+    if (ourRecID.length > 0) {
+      let username = await users_util.getUserIDByname(req.user1[0].Username);
+      let isSeen = await users_util.isFavorite(ourRecID, username[0].UserID);
+      res.status(200).send(isSeen);
+    } else {
+      res.status(200).send(false);
+    }
   } catch {
     res.status(401).send("something went wrong");
   }
